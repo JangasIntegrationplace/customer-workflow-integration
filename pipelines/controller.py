@@ -1,10 +1,11 @@
-from typing import Any, Optional
+from typing import Optional
+from abc import ABC, abstractmethod
 from ._immutable import xdict, freeze
 from .layers import BaseLayer, SentimentAnalysisLayer, GroupContentLayer
-from .settings import pipeline
+from .settings import DB_HANDLER
 
 
-class BaseController:
+class BaseController(ABC):
     layer: Optional[BaseLayer] = None
 
     def __init__(self, data: dict, *args, **kwargs):
@@ -13,19 +14,19 @@ class BaseController:
         self.raw_data = freeze(xdict(data))
         self.data = data
 
-    def process_data(self, data: Any):
-        if self.layer:
-            self.data[self.layer.__name__] = self.layer.proceed(data)
-        return self.data
+    @abstractmethod
+    def process_data(self, *args, **kwargs):
+        pass
 
-    def handler(self):
-        self.process_data()
+    @abstractmethod
+    def handler(self, *args, **kwargs):
+        pass
 
 
 class InputStreamController(BaseController):
     def handler(self):
         self.process_data()
-        pipeline["DB_HANDLER"].create_initial_input(self.data)
+        DB_HANDLER.create_initial_input(self.data)
         # TODO: Important: self.data must contain key "source"
 
 
@@ -40,4 +41,4 @@ class SentimentAnalysisController(BaseController):
 class OutputStreamController(BaseController):
     def handler(self):
         self.process_data()
-        pipeline["DB_HANDLER"].create_output_stream(self.data)
+        DB_HANDLER.create_output_stream(self.data)

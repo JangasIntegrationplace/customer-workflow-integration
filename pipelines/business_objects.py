@@ -13,11 +13,20 @@ class InitialInputData:
 
 
 @dataclass
-class GetOrCreateSlackMsg:
+class GetSlackThreadData:
     source_thread_id: str
     source_type: str
     body: str
     info: dict
+
+
+@dataclass
+class Dispatch:
+    source_thread_id: str
+    source_type: str
+    body: str
+    info: dict
+    thread_ts: str
 
 
 @dataclass

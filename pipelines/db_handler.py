@@ -14,6 +14,13 @@ class BaseHandler(ABC):
         pass
 
     @abstractclassmethod
+    def retrieve_slack_thread(cls, source_thread_id):
+        """
+        Retrieve Timestamp for Slack Thread if exists.
+        """
+        pass
+
+    @abstractclassmethod
     def create_output_stream(cls, data: dict):
         """
         Stores fully proceed data into database.

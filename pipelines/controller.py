@@ -27,7 +27,12 @@ class InputStreamController(BaseController):
     def handler(self):
         self.process_data()
         DB_HANDLER.create_initial_input(self.data)
-        # TODO: Important: self.data must contain key "source"
+
+
+class GetSlackThreadController(BaseController):
+    def handler(self):
+        self.process_data()
+        return DB_HANDLER.retrieve_slack_thread(self.data)
 
 
 class ContentGroupController(BaseController):

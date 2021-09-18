@@ -21,18 +21,14 @@ class GetSlackThreadData:
 
 
 @dataclass
-class Dispatch:
+class DispatchData:
     source_thread_id: str
     source_type: str
     body: str
     info: dict
-    thread_ts: str
+    thread_ts: Optional[str] = None
 
 
 @dataclass
-class SlackOutboundMessage:
-    msg_id: str
-    body: str
-    channel: str
-    info: dict
-    thread_ts: Optional[str] = None
+class SlackOutboundMessage(DispatchData):
+    pass

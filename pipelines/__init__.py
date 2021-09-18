@@ -1,8 +1,13 @@
-from .controller import InputStreamController, GetSlackThreadController
+from .controller import (
+    InputStreamController,
+    GetSlackThreadController,
+    DispatchController
+)
 from . import settings
 
 __all__ = (
     "settings",
     "InputStreamController",
-    "GetSlackThreadController"
+    "GetSlackThreadController",
+    "DispatchController",
 )

@@ -29,6 +29,11 @@ class InputStreamController(BaseController):
         DB_HANDLER.create_initial_input(self.data)
 
 
+class DispatchController(BaseController):
+    def handler(self):
+        self.process_data()
+
+
 class GetSlackThreadController(BaseController):
     def handler(self):
         self.process_data()

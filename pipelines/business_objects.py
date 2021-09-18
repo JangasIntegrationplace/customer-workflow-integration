@@ -30,5 +30,10 @@ class DispatchData:
 
 
 @dataclass
-class SlackOutboundMessage(DispatchData):
-    pass
+class SlackOutboundMessageData:
+    source_thread_id: str
+    source_type: str
+    info: dict
+    channel: str
+    text: str
+    thread_ts: Optional[str]

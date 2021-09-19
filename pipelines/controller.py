@@ -91,9 +91,9 @@ class OutputStreamController(BaseController):
         )
 
         slack_message = Slack.post_message(
-            self.data.channel, self.data.text,
+            channel, text,
             slack_bot_token=settings.SLACK_BOT_TOKEN,
-            thread_ts=self.data.thread_ts
+            thread_ts=self.data["thread_ts"]
         )
 
         thread_ts = self.data.get("thread_ts", slack_message.data["ts"])

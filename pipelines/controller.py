@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from ._immutable import xdict, freeze
 from .layers import BaseLayer, SentimentAnalysisLayer, GroupContentLayer
 from .business_objects import GetSlackThreadData, DispatchData, SlackOutboundMessageData
-from .settings import DB_HANDLER, SLACK_BOT_TOKEN
+from . import settings
 from .slack import Slack
 
 
@@ -29,7 +29,7 @@ class BaseController(ABC):
 class InputStreamController(BaseController):
     def handler(self):
         self.process_data()
-        DB_HANDLER.create_initial_input(self.data)
+        settings.DB_HANDLER.create_initial_input(self.data)
 
 
 class DispatchController(BaseController):
@@ -54,7 +54,7 @@ class GetSlackThreadController(BaseController):
 
     def handler(self):
         self.process_data()
-        return DB_HANDLER.retrieve_slack_thread(self.data)
+        return settings.DB_HANDLER.retrieve_slack_thread(self.data)
 
 
 class ContentGroupController(BaseController):
@@ -92,11 +92,11 @@ class OutputStreamController(BaseController):
 
         slack_message = Slack.post_message(
             self.data.channel, self.data.text,
-            slack_bot_token=SLACK_BOT_TOKEN,
+            slack_bot_token=settings.SLACK_BOT_TOKEN,
             thread_ts=self.data.thread_ts
         )
 
         thread_ts = self.data.get("thread_ts", slack_message.data["ts"])
 
         self.process_data(channel, text, thread_ts)
-        DB_HANDLER.create_output_stream(self.data)
+        settings.DB_HANDLER.create_output_stream(self.data)

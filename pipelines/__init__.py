@@ -2,7 +2,8 @@ from .controller import (
     InputStreamController,
     GetSlackThreadController,
     DispatchController,
-    OutputStreamController
+    OutputStreamController,
+    ReversedDispatchController
 )
 from . import settings
 from .slack import Slack
@@ -13,5 +14,6 @@ __all__ = (
     "GetSlackThreadController",
     "DispatchController",
     "OutputStreamController",
-    "Slack"
+    "Slack",
+    "ReversedDispatchController"
 )

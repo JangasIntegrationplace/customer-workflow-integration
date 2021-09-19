@@ -100,3 +100,18 @@ class OutputStreamController(BaseController):
 
         self.process_data(channel, text, thread_ts)
         settings.DB_HANDLER.create_output_stream(self.data)
+
+
+class ReversedDispatchController(BaseController):
+    def process_data(self, source_thread_id, source_type):
+        self.data = DispatchData(
+            source_thread_id=source_thread_id,
+            source_type=source_type,
+            body=self.data["body"],
+            thread_ts=self.data["thread_ts"],
+        )
+
+    def handler(self):
+        query_data = settings.DB_HANDLER \
+            .retrieve_slack_thread_by_thread_ts(self.data["thread_ts"])
+        self.process_data(query_data["source_thread_id"], query_data["source_type"])

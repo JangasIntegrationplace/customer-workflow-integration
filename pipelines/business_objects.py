@@ -37,3 +37,11 @@ class SlackOutboundMessageData:
     channel: str
     text: str
     thread_ts: Optional[str]
+
+
+@dataclass
+class ReversedDispatchData:
+    source_thread_id: str
+    source_type: str
+    body: str
+    thread_ts: str

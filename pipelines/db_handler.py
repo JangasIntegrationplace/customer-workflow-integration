@@ -26,3 +26,7 @@ class BaseHandler(ABC):
         Stores fully proceed data into database.
         """
         pass
+
+    @abstractclassmethod
+    def retrieve_slack_thread_by_thread_ts(cls, data: dict):
+        pass
